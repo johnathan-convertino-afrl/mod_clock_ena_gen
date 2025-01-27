@@ -1,0 +1,152 @@
+\begin{titlepage}
+  \begin{center}
+
+  {\Huge MOD\_CLOCK\_ENABLE\_GENERATOR}
+
+  \vspace{25mm}
+
+  \includegraphics[width=0.90\textwidth,height=\textheight,keepaspectratio]{img/AFRL.png}
+
+  \vspace{25mm}
+
+  \today
+
+  \vspace{15mm}
+
+  {\Large Jay Convertino}
+
+  \end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+
+\section{Usage}
+
+\subsection{Introduction}
+
+\par
+This core will generate an enable that is some divisible rate of the clock. The pulse will last for one clock cycle. This
+core is meant to be used in situations where the enable on a register is used to control the clock rate.
+
+\subsection{Dependencies}
+
+\par
+The following are the dependencies of the cores.
+
+\begin{itemize}
+  \item fusesoc 2.X
+  \item iverilog (simulation)
+  \item cocotb (simulation)
+\end{itemize}
+
+\input{src/fusesoc/depend_fusesoc_info.tex}
+
+\subsection{In a Project}
+\par
+Simply use this core to generate a slow enable for a clocked device.
+
+\section{Architecture}
+\par
+The only module is the mod\_clock\_ena\_gen module. It is listed below.
+
+\begin{itemize}
+  \item \textbf{mod\_clock\_ena\_gen} Implement an algorithm to generate a slow enable based on a faster clock (see core for documentation).
+\end{itemize}
+
+\par
+This method of generating a slow enable allows for a design to save clocks and prevent timing issues. Since the timing is still based on the
+original clock and the enable signal is sychronus to it. It can suffer from jitter and deviation, but for devices such as a UART this is well
+within its tolerance. In testing this seems to be 5 percent at worst down to 0 percent at best.
+
+\par
+Method is based on a mod divide of the clock freqency and the requested output enable rate.
+\begin{enumerate}
+\item Add the requested enable rate to a counter
+\item Set enable to 0
+\item If the counter is equal to or greater than the clock frequency
+  \begin{enumerate}
+    \item Set the counter to counter minus clock frequency. This will result in the overflow being set to the counter for the next build up.
+    \item Set enable to 1
+  \end{enumerate}
+\end{enumerate}
+
+Please see \ref{Module Documentation} for more information.
+
+\section{Building}
+
+\par
+The mod clock enable core is written in Verilog 2001. They should synthesize in any modern FPGA software. The core comes as a fusesoc packaged core and can be
+included in any other core. Be sure to make sure you have meet the dependencies listed in the previous section.
+
+\subsection{fusesoc}
+\par
+Fusesoc is a system for building FPGA software without relying on the internal project management of the tool. Avoiding vendor lock in to Vivado or Quartus.
+These cores, when included in a project, can be easily integrated and targets created based upon the end developer needs. The core by itself is not a part of
+a system and should be integrated into a fusesoc based system. Simulations are setup to use fusesoc and are a part of its targets.
+
+\subsection{Source Files}
+
+\input{src/fusesoc/files_fusesoc_info.tex}
+
+\subsection{Targets}
+
+\input{src/fusesoc/targets_fusesoc_info.tex}
+
+\subsection{Directory Guide}
+
+\par
+Below highlights important folders from the root of the directory.
+
+\begin{enumerate}
+  \item \textbf{docs} Contains all documentation related to this project.
+    \begin{itemize}
+      \item \textbf{manual} Contains user manual and github page that are generated from the latex sources.
+    \end{itemize}
+  \item \textbf{src} Contains source files for the core
+  \item \textbf{tb} Contains test bench files for iverilog and cocotb
+\end{enumerate}
+
+\newpage
+
+\section{Simulation}
+\par
+There are a few different simulations that can be run for this core. All currently use iVerilog (icarus) to run. The first is iverilog, which
+uses verilog only for the simulations. The other is cocotb. This does a unit test approach to the testing and gives a list of tests that pass
+or fail.
+
+\subsection{iverilog}
+\par
+All simulation targets that do NOT have cocotb in the name use a verilog test bench with verilog stimulus components.
+All of these tests provide fst output files for viewing the waveform in the there target build folder.
+
+\subsection{cocotb}
+\par
+
+To use the cocotb tests you must install the following python libraries.
+
+\begin{lstlisting}[language=bash]
+ $ pip install cocotb
+\end{lstlisting}
+
+Then you must use the cocotb sim target. In this case it is sim\_cocotb. This target can be run with various bus and fifo parameters.
+
+\begin{lstlisting}[language=bash]
+  $ fusesoc run --target sim_cocotb AFRL:clock:mod_clock_ena_gen:1.0.0
+\end{lstlisting}
+
+\newpage
+
+\section{Code Documentation} \label{Code Documentation}
+
+\par
+Natural docs is used to generate documentation for this project. The next lists the following sections.
+
+\begin{itemize}
+\item \textbf{mod\_clock\_ena\_gen} Generate a low rate enable clock.\\
+\item \textbf{tb\_mod\_ena} Verilog test bench.\\
+\item \textbf{tb\_cocotb verilog} Verilog test bench base for cocotb.\\
+\item \textbf{tb\_cocotb python} cocotb unit test functions.\\
+\end{itemize}
+

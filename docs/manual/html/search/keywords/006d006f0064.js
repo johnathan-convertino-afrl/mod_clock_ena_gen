@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("mod",["Module","File"],[["mod_clock_ena_gen",,[[,,,,0,"File:mod_clock_ena_gen.v:mod_clock_ena_gen","SystemVerilogModule:mod_clock_ena_gen"],[,"mod_clock_ena_gen.v",,,1,"File:mod_clock_ena_gen.v:mod_clock_ena_gen.v"]]]]);

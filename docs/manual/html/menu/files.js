@@ -1,0 +1,1 @@
+﻿NDMenu.OnSectionLoaded("files.js",[[2,"mod_clock_ena_gen","File:",[[1,"mod_clock_ena_gen.v"]]],[2,"mod_clock_ena_gen_test_bench","File2:",[[1,"tb_cocotb.py"],[1,"tb_cocotb.v"],[1,"tb_mod_ena.v"]]]]);

@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("SystemVerilogModule:tb_mod_ena","tb_mod_ena");NDSummary.OnSummaryLoaded("SystemVerilogModule:tb_mod_ena",[["SystemVerilog","SystemVerilog"]],[["Modules","Module"]],[[45,0,0,"tb_mod_ena"]]);

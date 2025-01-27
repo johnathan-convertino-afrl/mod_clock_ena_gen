@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("cou",["Function"],[["count_pulses",,[[,,,,0,"File2:tb_cocotb.py:count_pulses"]]]]);

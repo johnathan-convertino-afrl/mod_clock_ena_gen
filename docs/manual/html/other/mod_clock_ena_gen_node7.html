@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+
+<!--Converted with LaTeX2HTML 2024 (Released January 1, 2024) -->
+<HTML lang="en">
+<HEAD>
+<TITLE>Architecture</TITLE>
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="viewport" CONTENT="width=device-width, initial-scale=1.0">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2024">
+
+<LINK REL="STYLESHEET" HREF="html.css">
+
+<LINK REL="next" HREF="mod_clock_ena_gen_node8.html">
+<LINK REL="previous" HREF="mod_clock_ena_gen_node2.html">
+<LINK REL="next" HREF="mod_clock_ena_gen_node8.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A
+ HREF="mod_clock_ena_gen_node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALT="next" SRC="next.png"></A> 
+<A
+ HREF="html.html">
+<IMG WIDTH="26" HEIGHT="24" ALT="up" SRC="up.png"></A> 
+<A
+ HREF="mod_clock_ena_gen_node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALT="previous" SRC="prev.png"></A> 
+<A ID="tex2html59"
+  HREF="mod_clock_ena_gen_node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALT="contents" SRC="contents.png"></A>  
+<BR>
+<B> Next:</B> <A
+ HREF="mod_clock_ena_gen_node8.html">Building</A>
+<B> Up:</B> <A
+ HREF="html.html">html</A>
+<B> Previous:</B> <A
+ HREF="mod_clock_ena_gen_node6.html">In a Project</A>
+ &nbsp; <B>  <A ID="tex2html60"
+  HREF="mod_clock_ena_gen_node1.html">Contents</A></B> 
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A ID="SECTION00030000000000000000">
+Architecture</A>
+</H1>
+
+<P>
+The only module is the mod_clock_ena_gen module. It is listed below.
+
+<P>
+
+<UL>
+<LI><SPAN  CLASS="textbf">mod_clock_ena_gen</SPAN> Implement an algorithm to generate a slow enable based on a faster clock (see core for documentation).
+</LI>
+</UL>
+
+<P>
+This method of generating a slow enable allows for a design to save clocks and prevent timing issues. Since the timing is still based on the
+original clock and the enable signal is sychronus to it. It can suffer from jitter and deviation, but for devices such as a UART this is well
+within its tolerance. In testing this seems to be 5 percent at worst down to 0 percent at best.
+
+<P>
+Method is based on a mod divide of the clock freqency and the requested output enable rate.
+
+<OL>
+<LI>Add the requested enable rate to a counter
+</LI>
+<LI>Set enable to 0
+</LI>
+<LI>If the counter is equal to or greater than the clock frequency
+  
+<OL>
+<LI>Set the counter to counter minus clock frequency. This will result in the overflow being set to the counter for the next build up.
+</LI>
+<LI>Set enable to 1
+  
+</LI>
+</OL>
+</LI>
+</OL>
+
+<P>
+Please see <A HREF="#Module_Documentation"><IMG  ALT="[*]" SRC="crossref.png"></A> for more information.
+
+<P>
+<BR><HR>
+
+</BODY>
+</HTML>

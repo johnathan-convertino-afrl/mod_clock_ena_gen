@@ -1,0 +1,85 @@
+CAPI=2:
+
+name: AFRL:clock:mod_clock_ena_gen:1.0.0
+description: Mod clock enable generator
+
+filesets:
+  src:
+    files:
+      - src/mod_clock_ena_gen.v
+    file_type: verilogSource
+  
+  tb:
+    files:
+      - tb/tb_mod_ena.v : {file_type: verilogSource}
+
+  tb_cocotb:
+    files:
+      - tb/tb_cocotb.py : {file_type : user, copyto : .}
+      - tb/tb_cocotb.v : { file_type: verilogSource }
+
+  dep:
+    depend:
+      - AFRL:utility:helper:1.0.0
+      
+  dep_tb:
+    depend:
+      - AFRL:simulation:clock_stimulator
+      - AFRL:utility:sim_helper
+  
+targets:
+  default: &default
+    description: Default for IP intergration.
+    filesets: [src, dep]
+  
+  sim: &sim
+    <<: *default
+    description: Test
+    default_tool: icarus
+    toplevel: tb_mod_ena
+    filesets_append: [tb, dep_tb]
+    parameters:
+      - CLOCK_SPEED
+      - START_AT_ZERO
+      - DELAY
+    
+  sim_cocotb:
+    <<: *default
+    description: Cocotb unit tests
+    flow: sim
+    flow_options:
+      tool: icarus
+      cocotb_module: tb_cocotb
+      timescale: 1ns/1ns
+      vcs_options: [-timescale=1ns/1ns]
+    filesets_append: [tb_cocotb]
+    toplevel: tb_cocotb
+    parameters:
+      - CLOCK_SPEED
+      - START_AT_ZERO
+      - DELAY
+    
+parameters:
+  CLOCK_SPEED:
+    datatype    : int
+    default     : 100000000
+    description : Speed of the clock to derive enable from
+    paramtype   : vlogparam
+
+  START_AT_ZERO:
+    datatype    : int
+    default     : 0
+    description : When anything other than 0, start at 0. When 0, start counter at the midpoint (CLOCK_SPEED/2).
+    paramtype   : vlogparam
+    
+  ENABLE_RATE:
+    datatype    : int
+    default     : 115200
+    description : Rate that the enable pulse is brought high.
+    paramtype   : vlogparam
+    
+  DELAY:
+    datatype    : int
+    default     : 0
+    description : Number of clock cycles to delay the enable pulse.
+    paramtype   : vlogparam

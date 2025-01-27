@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("SystemVerilogModule:mod_clock_ena_gen","mod_clock_ena_gen");NDSummary.OnSummaryLoaded("SystemVerilogModule:mod_clock_ena_gen",[["SystemVerilog","SystemVerilog"]],[["Modules","Module"]],[[25,0,0,"mod_clock_ena_gen"]]);
