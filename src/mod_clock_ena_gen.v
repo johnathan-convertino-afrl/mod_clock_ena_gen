@@ -45,7 +45,7 @@
  * Parameters:
  *
  *   CLOCK_SPEED      - This is the aclk frequency in Hz
- *   START_AT_ZERO    - Start counter at 0 if set. Otherwise start at CLOCK_SPEED/2.
+ *   START_AT_ZERO    - Start counter at rate if set. Otherwise set to CLOCK_SPEED/2 (midpoint).
  *   DELAY            - Delay the enable by a number of clock ticks
  *
  * Ports:
@@ -71,8 +71,6 @@ module mod_clock_ena_gen #(
   
   `include "util_helper_math.vh"
 
-  localparam START = (START_AT_ZERO ? 0 : CLOCK_SPEED/2);
-  
   reg [clogb2(CLOCK_SPEED):0] counter;
   
   reg r_ena = 0;
@@ -80,14 +78,14 @@ module mod_clock_ena_gen #(
   //baud enable generator
   always @(posedge clk) begin
     if(rstn == 1'b0 || hold == 1'b1) begin
-      counter <= START;
+      counter <= (START_AT_ZERO ? rate : CLOCK_SPEED/2);
       r_ena   <= 1'b0;
     end else begin
       counter <= counter + rate;
       r_ena   <= 1'b0;
       
       if(counter >= CLOCK_SPEED) begin
-        counter <= counter - CLOCK_SPEED;
+        counter <= counter - CLOCK_SPEED + rate;
         r_ena   <= 1'b1;
       end
     end

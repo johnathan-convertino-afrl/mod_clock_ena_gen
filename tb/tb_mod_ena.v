@@ -48,6 +48,7 @@
 module tb_mod_ena  #(
     parameter CLOCK_SPEED   = 2000000,
     parameter START_AT_ZERO = 0,
+    parameter ENABLE_RATE   = 1000,
     parameter DELAY         = 0
   )();
   
@@ -100,7 +101,7 @@ module tb_mod_ena  #(
     .clk(tb_dut_clk),
     .rstn(tb_dut_rstn),
     .hold(1'b0),
-    .rate(115200),
+    .rate(ENABLE_RATE),
     .ena(tb_dut_ena)
   );
 
@@ -117,13 +118,18 @@ module tb_mod_ena  #(
         ena_counter <= ena_counter + 1;
       end
 
+      if(loops >= 10)
+      begin
+        $finish();
+      end
+
       if(clk_counter >= CLOCK_SPEED) begin
         avg_freq <= (ena_counter + avg_freq) / (loops == 1 ? 1 : 2);
 
         $display ("LOOP: %d, FREQUENCY: %d", loops, ena_counter);
         $strobe  ("AVG OUTPUT ENABLE FREQUENCY: %d", avg_freq);
 
-        ena_counter <= 1;
+        ena_counter <= 0;
         clk_counter <= 1;
         loops <= loops + 1;
       end

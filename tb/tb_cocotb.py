@@ -74,7 +74,8 @@ async def reset_dut(dut):
 # Function: count_pulses
 # Cocotb task to count pulses from a output.
 async def count_pulses(dut):
-  count = 0
+  #eat extra pulse do to START at
+  count = dut.START_AT_ZERO.value-1
 
   init_time = get_sim_time('ms')
 
