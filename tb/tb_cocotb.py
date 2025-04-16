@@ -87,7 +87,7 @@ async def count_pulses(dut):
 
   print(f"INFO: Enable rate from counter: {count}")
   print(f"INFO: Enable rate target: {dut.rate.value.integer}")
-  print(f"INFO: Deviation: {count/dut.rate.value.integer:.2%}")
+  print(f"INFO: Deviation: {count/dut.rate.value.integer-1:.2%}")
   assert dut.rate.value.integer >= count*0.95, "Final output rate is less then 95% of the target."
   assert dut.rate.value.integer <= count*1.05, "Final output rate is greater then 105% of the target."
 
