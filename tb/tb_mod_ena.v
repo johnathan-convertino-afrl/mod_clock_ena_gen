@@ -47,7 +47,6 @@
  */
 module tb_mod_ena  #(
     parameter CLOCK_SPEED   = 2000000,
-    parameter START_AT_ZERO = 0,
     parameter ENABLE_RATE   = 1000,
     parameter DELAY         = 0
   )();
@@ -95,11 +94,11 @@ module tb_mod_ena  #(
    */
   mod_clock_ena_gen #(
     .CLOCK_SPEED(CLOCK_SPEED),
-    .START_AT_ZERO(START_AT_ZERO),
     .DELAY(DELAY)
   ) dut (
     .clk(tb_dut_clk),
     .rstn(tb_dut_rstn),
+    .start0(1'b1),
     .hold(1'b0),
     .rate(ENABLE_RATE),
     .ena(tb_dut_ena)
@@ -114,8 +113,9 @@ module tb_mod_ena  #(
     end else begin
       clk_counter <= clk_counter + 1;
 
+      // SIM ONLY BLOCKING
       if(tb_dut_ena == 1'b1) begin
-        ena_counter <= ena_counter + 1;
+        ena_counter = ena_counter + 1;
       end
 
       if(loops >= 10)

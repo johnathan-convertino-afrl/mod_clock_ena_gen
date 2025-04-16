@@ -41,25 +41,25 @@
  * Parameters:
  *
  *   CLOCK_SPEED      - This is the aclk frequency in Hz
- *   START_AT_ZERO    - Start counter at 0 if set. Otherwise start at CLOCK_SPEED/2.
  *   DELAY            - Delay the enable by a number of clock ticks
  *
  * Ports:
  *
  *   clk       - Clock used for enable generation
  *   rstn      - Negative reset for anything clocked on clk
+ *   start0    - Start counter at rate if set. Otherwise set to CLOCK_SPEED/2+rate (midpoint).
  *   hold      - hold enable low and pause + reset count till hold removed (low).
  *   rate      - rate that enable pulse will be generated, must be less then the clock rate.
  *   ena       - positive enable that is pulsed high at enable rate.
  */
 module tb_cocotb #(
     parameter CLOCK_SPEED   = 2000000,
-    parameter START_AT_ZERO = 0,
     parameter DELAY         = 0
   )
   (
     input           clk,
     input           rstn,
+    input           start0,
     input           hold,
     input   [31:0]  rate,
     output          ena
@@ -81,11 +81,11 @@ module tb_cocotb #(
    */
   mod_clock_ena_gen #(
     .CLOCK_SPEED(CLOCK_SPEED),
-    .START_AT_ZERO(START_AT_ZERO),
     .DELAY(DELAY)
   ) dut (
     .clk(clk),
     .rstn(rstn),
+    .start0(start0),
     .hold(hold),
     .rate(rate),
     .ena(ena)

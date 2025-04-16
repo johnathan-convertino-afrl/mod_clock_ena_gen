@@ -45,13 +45,13 @@
  * Parameters:
  *
  *   CLOCK_SPEED      - This is the aclk frequency in Hz
- *   START_AT_ZERO    - Start counter at rate if set. Otherwise set to CLOCK_SPEED/2+rate (midpoint).
  *   DELAY            - Delay the enable by a number of clock ticks
  *
  * Ports:
  *
  *   clk       - Clock used for enable generation
  *   rstn      - Negative reset for anything clocked on clk
+ *   start0    - Start counter at rate if set. Otherwise set to CLOCK_SPEED/2+rate (midpoint).
  *   hold      - hold enable low and pause + reset count till hold removed (low).
  *   rate      - rate that enable pulse will be generated, must be less then the clock rate.
  *   ena       - positive enable that is pulsed high at enable rate.
@@ -64,6 +64,7 @@ module mod_clock_ena_gen #(
   (
     input           clk,
     input           rstn,
+    input           start0,
     input           hold,
     input   [31:0]  rate,
     output          ena
@@ -78,7 +79,7 @@ module mod_clock_ena_gen #(
   //baud enable generator
   always @(posedge clk) begin
     if(rstn == 1'b0 || hold == 1'b1) begin
-      counter <= (START_AT_ZERO ? rate : CLOCK_SPEED/2+rate);
+      counter <= (start0 ? rate : CLOCK_SPEED/2+rate);
       r_ena   <= 1'b0;
     end else begin
       counter <= counter + rate;

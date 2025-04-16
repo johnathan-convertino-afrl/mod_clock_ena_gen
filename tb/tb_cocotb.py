@@ -75,7 +75,7 @@ async def reset_dut(dut):
 # Cocotb task to count pulses from a output.
 async def count_pulses(dut):
   #eat extra pulse do to START at
-  count = dut.START_AT_ZERO.value-1
+  count = dut.start0.value.integer-1
 
   init_time = get_sim_time('ms')
 
@@ -103,17 +103,19 @@ async def speed_test(dut):
 
     await reset_dut(dut)
 
-    dut.hold.value = 1;
+    dut.hold.value = 1
+
+    dut.start0.value = 0
 
     for x in range(2400, 256000, 2400):
 
-        dut.hold.value = 1;
+        dut.hold.value = 1
 
-        dut.rate.value = x;
+        dut.rate.value = x
 
         await RisingEdge(dut.clk)
 
-        dut.hold.value = 0;
+        dut.hold.value = 0
 
         await count_pulses(dut)
 
