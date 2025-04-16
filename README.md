@@ -17,10 +17,10 @@
 
 ### Version
 #### Current
-  - V1.0.0 - initial release
+  - V1.0.1 - Bug in setting start, caused incorrect enable rate.
 
 #### Previous
-  - none
+  - V1.0.0 - initial release
 
 ### DOCUMENTATION
   For detailed usage information, please navigate to one of the following sources. They are the same, just in a different format.
@@ -40,7 +40,7 @@
 ### PARAMETERS
 
 *   CLOCK_SPEED      - This is the aclk frequency in Hz
-*   START_AT_ZERO    - Start counter at 0 if set. Otherwise start at CLOCK_SPEED/2.
+*   START_AT_ZERO    - Start counter at rate if set. Otherwise start at CLOCK_SPEED/2.
 *   DELAY            - Delay the enable by a number of clock ticks
 
 ### COMPONENTS

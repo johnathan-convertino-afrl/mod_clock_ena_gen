@@ -1,6 +1,6 @@
 CAPI=2:
 
-name: AFRL:clock:mod_clock_ena_gen:1.0.0
+name: AFRL:clock:mod_clock_ena_gen:1.0.1
 description: Mod clock enable generator
 
 filesets:
@@ -41,6 +41,7 @@ targets:
     parameters:
       - CLOCK_SPEED
       - START_AT_ZERO
+      - ENABLE_RATE
       - DELAY
     
   sim_cocotb:
