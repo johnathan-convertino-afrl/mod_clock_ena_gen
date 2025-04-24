@@ -103,19 +103,21 @@ async def speed_test(dut):
 
     await reset_dut(dut)
 
-    dut.hold.value = 1
+    dut.hold.value = 0
+
+    dut.clr.value = 1
 
     dut.start0.value = 0
 
     for x in range(2400, 256000, 2400):
 
-        dut.hold.value = 1
+        dut.clr.value = 1
 
         dut.rate.value = x
 
         await RisingEdge(dut.clk)
 
-        dut.hold.value = 0
+        dut.clr.value = 0
 
         await count_pulses(dut)
 

@@ -99,6 +99,7 @@ module tb_mod_ena  #(
     .clk(tb_dut_clk),
     .rstn(tb_dut_rstn),
     .start0(1'b1),
+    .clr(1'b0),
     .hold(1'b0),
     .rate(ENABLE_RATE),
     .ena(tb_dut_ena)

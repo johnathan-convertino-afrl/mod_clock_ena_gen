@@ -1,6 +1,6 @@
 CAPI=2:
 
-name: AFRL:clock:mod_clock_ena_gen:1.0.1
+name: AFRL:clock:mod_clock_ena_gen:1.1.1
 description: Mod clock enable generator
 
 filesets:
@@ -40,7 +40,6 @@ targets:
     filesets_append: [tb, dep_tb]
     parameters:
       - CLOCK_SPEED
-      - START_AT_ZERO
       - ENABLE_RATE
       - DELAY
     
@@ -57,7 +56,6 @@ targets:
     toplevel: tb_cocotb
     parameters:
       - CLOCK_SPEED
-      - START_AT_ZERO
       - DELAY
     
 parameters:
@@ -65,12 +63,6 @@ parameters:
     datatype    : int
     default     : 100000000
     description : Speed of the clock to derive enable from
-    paramtype   : vlogparam
-
-  START_AT_ZERO:
-    datatype    : int
-    default     : 0
-    description : When anything other than 0, start at 0. When 0, start counter at the midpoint (CLOCK_SPEED/2).
     paramtype   : vlogparam
     
   ENABLE_RATE:

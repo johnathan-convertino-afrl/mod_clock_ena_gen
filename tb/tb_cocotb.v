@@ -48,6 +48,7 @@
  *   clk       - Clock used for enable generation
  *   rstn      - Negative reset for anything clocked on clk
  *   start0    - Start counter at rate if set. Otherwise set to CLOCK_SPEED/2+rate (midpoint).
+ *   clr       - Clear counter to initial values.
  *   hold      - hold enable low and pause + reset count till hold removed (low).
  *   rate      - rate that enable pulse will be generated, must be less then the clock rate.
  *   ena       - positive enable that is pulsed high at enable rate.
@@ -60,6 +61,7 @@ module tb_cocotb #(
     input           clk,
     input           rstn,
     input           start0,
+    input           clr,
     input           hold,
     input   [31:0]  rate,
     output          ena
@@ -86,6 +88,7 @@ module tb_cocotb #(
     .clk(clk),
     .rstn(rstn),
     .start0(start0),
+    .clr(clr),
     .hold(hold),
     .rate(rate),
     .ena(ena)
