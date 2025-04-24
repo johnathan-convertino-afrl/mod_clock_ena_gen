@@ -52,6 +52,7 @@
  *   clk       - Clock used for enable generation
  *   rstn      - Negative reset for anything clocked on clk
  *   start0    - Start counter at rate if set. Otherwise set to CLOCK_SPEED/2+rate (midpoint).
+ *   clr       - Clear counter back to start on active high asycronusly.
  *   hold      - hold enable low and pause + reset count till hold removed (low).
  *   rate      - rate that enable pulse will be generated, must be less then the clock rate.
  *   ena       - positive enable that is pulsed high at enable rate.
@@ -65,6 +66,7 @@ module mod_clock_ena_gen #(
     input           clk,
     input           rstn,
     input           start0,
+    input           clr,
     input           hold,
     input   [31:0]  rate,
     output          ena
@@ -77,10 +79,16 @@ module mod_clock_ena_gen #(
   reg r_ena = 0;
   
   //baud enable generator
-  always @(posedge clk) begin
-    if(rstn == 1'b0 || hold == 1'b1) begin
+  always @(posedge clk, clr) begin
+    if(rstn == 1'b0) begin
       counter <= (start0 ? rate : CLOCK_SPEED/2+rate);
       r_ena   <= 1'b0;
+    end else if(clr == 1'b1) begin
+      counter <= (start0 ? rate : CLOCK_SPEED/2+rate);
+      r_ena   <= 1'b0;
+    end else if(hold == 1'b1) begin
+      counter <= counter;
+      r_ena   <= r_ena;
     end else begin
       counter <= counter + rate;
       r_ena   <= 1'b0;
