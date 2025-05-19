@@ -79,7 +79,7 @@ module mod_clock_ena_gen #(
   reg r_ena = 0;
   
   //baud enable generator
-  always @(posedge clk, clr) begin
+  always @(posedge clk or posedge clr) begin
     if(rstn == 1'b0) begin
       counter <= (start0 ? rate : CLOCK_SPEED/2+rate);
       r_ena   <= 1'b0;
