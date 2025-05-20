@@ -28,15 +28,6 @@
   - [mod_clock_ena_gen.pdf](docs/manual/mod_clock_ena_gen.pdf)
   - [github page](https://johnathan-convertino-afrl.github.io/mod_clock_ena_gen/)
 
-### DEPENDENCIES
-#### Build
-
-  - AFRL:utility:helper:1.0.0
-
-#### Simulation
-
-  - AFRL:utility:sim_helper
-
 ### PARAMETERS
 
 *   CLOCK_SPEED      - This is the aclk frequency in Hz
@@ -51,6 +42,7 @@
 #### TB
 
 * tb_mod_ena.v
+* tb_cocotb
   
 ### FUSESOC
 
@@ -61,5 +53,6 @@
 
 * RUN WITH: (fusesoc run --target=sim VENDER:CORE:NAME:VERSION)
   - default (for IP integration builds)
+  - lint
   - sim
   - sim_cocotb

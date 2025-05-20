@@ -31,6 +31,16 @@ targets:
   default: &default
     description: Default for IP intergration.
     filesets: [src, dep]
+
+  lint:
+    description: Lint with Verible
+    filesets: [src]
+    toplevel: mod_clock_ena_gen
+    default_tool: veriblelint
+    tools:
+      veriblelint:
+        rules:
+         - "-explicit-parameter-storage-type,-parameter-name-style,-line-length,-no-trailing-spaces"
   
   sim: &sim
     <<: *default

@@ -102,7 +102,7 @@ module mod_clock_ena_gen #(
   
   //DELAY output of uart_ena
   generate
-    if(DELAY > 0) begin
+    if(DELAY > 0) begin : gen_DELAY_ENABLED
       //DELAYs
       reg [DELAY:0] DELAY_ena;
       
@@ -115,7 +115,7 @@ module mod_clock_ena_gen #(
           DELAY_ena <= {DELAY_ena[DELAY-1:0], r_ena};
         end
       end
-    end else begin
+    end else begin : gen_DELAY_DISABLED
       assign ena = r_ena;
     end
   endgenerate
