@@ -5,14 +5,19 @@
 
 ---
 
-   author: Jay Convertino   
+  author: Jay Convertino   
+  
+  date: 2025.01.27
+  
+  details: Divide a clock to a slower rate. The output is an enable synced to the clock rate.
+  
+  license: MIT   
    
-   date: 2025.01.27
-   
-   details: Divide a clock to a slower rate. The output is an enable synced to the clock rate.
-   
-   license: MIT   
-   
+  Actions:  
+
+  [![Lint Status](../../actions/workflows/lint.yml/badge.svg)](../../actions)  
+  [![Manual Status](../../actions/workflows/manual.yml/badge.svg)](../../actions)  
+  
 ---
 
 ### Version

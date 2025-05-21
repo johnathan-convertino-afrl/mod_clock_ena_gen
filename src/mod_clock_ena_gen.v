@@ -56,6 +56,7 @@
  *   hold      - hold enable low and pause + reset count till hold removed (low).
  *   rate      - rate that enable pulse will be generated, must be less then the clock rate.
  *   ena       - positive enable that is pulsed high at enable rate.
+ *
  */
 module mod_clock_ena_gen #(
     parameter CLOCK_SPEED   = 2000000,
