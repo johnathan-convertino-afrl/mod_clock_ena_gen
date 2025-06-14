@@ -60,7 +60,6 @@
  */
 module mod_clock_ena_gen #(
     parameter CLOCK_SPEED   = 2000000,
-    parameter START_AT_ZERO = 0,
     parameter DELAY         = 0
   ) 
   (
@@ -80,19 +79,17 @@ module mod_clock_ena_gen #(
   reg r_ena = 0;
   
   //baud enable generator
-  always @(posedge clk or posedge clr) begin
-    if(rstn == 1'b0) begin
+  always @(posedge clk) begin
+    if(rstn == 1'b0 || clr == 1'b1) begin
       counter <= (start0 ? rate : CLOCK_SPEED/2+rate);
       r_ena   <= 1'b0;
-    end else if(clr == 1'b1) begin
-      counter <= (start0 ? rate : CLOCK_SPEED/2+rate);
-      r_ena   <= 1'b0;
-    end else if(hold == 1'b1) begin
-      counter <= counter;
-      r_ena   <= r_ena;
     end else begin
       counter <= counter + rate;
       r_ena   <= 1'b0;
+      
+      if(hold == 1'b1) begin
+        counter <= counter;
+      end
       
       if(counter >= CLOCK_SPEED) begin
         counter <= counter - CLOCK_SPEED + rate;
