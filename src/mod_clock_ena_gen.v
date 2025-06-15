@@ -87,13 +87,14 @@ module mod_clock_ena_gen #(
       counter <= counter + rate;
       r_ena   <= 1'b0;
       
-      if(hold == 1'b1) begin
-        counter <= counter;
-      end
-      
       if(counter >= CLOCK_SPEED) begin
         counter <= counter - CLOCK_SPEED + rate;
         r_ena   <= 1'b1;
+      end
+      
+      if(hold == 1'b1) begin
+        counter <= counter;
+        r_ena   <= r_ena;
       end
     end
   end
