@@ -1,5 +1,6 @@
 # MOD CLOCK ENABLE GENERATOR
 ### Simple core that generates a enable pulse of some rate derived from the clock.
+---
 
 ![image](docs/manual/img/AFRL.png)
 
